@@ -6,13 +6,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "dotenv -e .env.test jest --watch",
+    "cypress": "dotenv -e .env.test npm run dev & wait-on http://localhost:3000 && dotenv -e .env.test cypress open",
+    "migrate": "prisma migrate reset",
+    "migrate:test": "dotenv -e .env.test -- prisma migrate reset --skip-seed",
+    "prettier": "prettier -w __tests__ cypress lib pages prisma"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^3.9.2",
+    "dotenv-cli": "^5.1.0",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
@@ -23,16 +28,19 @@
     "@types/node": "^17.0.33",
     "@types/react": "^18.0.9",
     "autoprefixer": "^10.4.2",
+    "cypress": "^9.6.1",
     "eslint": "8.9.0",
     "eslint-config-next": "12.0.10",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
+    "jest-mock-extended": "^2.0.6",
     "node-mocks-http": "^1.11.0",
     "postcss": "^8.4.6",
     "prettier": "2.5.1",
     "prisma": "^3.9.2",
     "tailwindcss": "^3.0.22",
     "ts-node": "^10.5.0",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "wait-on": "^6.0.1"
   }
 }
