@@ -15,9 +15,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strictNullChecks": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["cypress"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js"],
-  "exclude": ["node_modules"],
-  "types": ["cypress"]
+  "exclude": ["node_modules"]
 }

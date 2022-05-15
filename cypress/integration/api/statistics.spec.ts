@@ -1,3 +1,5 @@
+import { Job } from "lib/api/jobs";
+
 const SALARIES = new Array(10).fill(0).map((_, index) => 1000 + index * 500);
 
 describe("api/jobs", () => {
@@ -7,7 +9,7 @@ describe("api/jobs", () => {
       data: {
         name: "Test job",
       },
-    }).then((job) => {
+    }).then((job: Job) => {
       SALARIES.forEach((salary) =>
         cy.task("db:insertRecord", {
           model: "employee",
@@ -54,7 +56,7 @@ describe("api/jobs", () => {
       data: {
         name: "Another job",
       },
-    }).then((job) => {
+    }).then((job: Job) => {
       cy.request({
         method: "GET",
         url: "/api/statistics",
