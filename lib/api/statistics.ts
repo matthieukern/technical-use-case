@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export type Statistics = {
-  jobId: number,
-  sampleSize: number,
+  jobId: number;
+  sampleSize: number;
   percentiles: {
-    p25: number,
-    mean: number,
-    p75: number
-  }
-}
+    p25: number;
+    mean: number;
+    p75: number;
+  };
+};
 
 export const get = (jobId): Promise<Statistics | null> => {
   if (!jobId) {
@@ -18,8 +18,8 @@ export const get = (jobId): Promise<Statistics | null> => {
   return axios
     .get("/api/statistics", {
       params: {
-        jobId
-      }
+        jobId,
+      },
     })
-    .then(res => res.data)
+    .then((res) => res.data);
 };

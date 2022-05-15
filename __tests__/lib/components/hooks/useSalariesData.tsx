@@ -6,9 +6,7 @@ import useSalariesData from "lib/components/hooks/useSalariesData";
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    {children}
-  </QueryClientProvider>
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
 describe("JobsStatistics", () => {
@@ -21,11 +19,13 @@ describe("JobsStatistics", () => {
         percentiles: {
           p25: 35000,
           mean: 45000,
-          p75: 65000
-        }
+          p75: 65000,
+        },
       });
 
-    const { result } = renderHook(() => useSalariesData({ selectedJobId: 2 }), { wrapper });
+    const { result } = renderHook(() => useSalariesData({ selectedJobId: 2 }), {
+      wrapper,
+    });
     await waitFor(() => {
       expect(!result.current.isLoading && result.current.ready).toBeTruthy();
     });
@@ -40,8 +40,8 @@ describe("JobsStatistics", () => {
       percentiles: {
         p25: 35000,
         mean: 45000,
-        p75: 65000
-      }
-    })
+        p75: 65000,
+      },
+    });
   });
 });

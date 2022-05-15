@@ -2,31 +2,33 @@ import { useQuery } from "react-query";
 import { get as getStatistics, Statistics } from "lib/api/statistics";
 
 type UseSalariesDataArgs = {
-  selectedJobId: number
-}
+  selectedJobId: number;
+};
 
 type UseSalariesDataValues = {
-  isLoading: boolean,
-  ready: boolean,
-  step: number,
-  startPercent: number,
-  endPercent: number,
-  maxSalaryDisplay: number,
+  isLoading: boolean;
+  ready: boolean;
+  step: number;
+  startPercent: number;
+  endPercent: number;
+  maxSalaryDisplay: number;
   percentiles: {
-    p25: number,
-    mean: number,
-    p75: number
-  }
-}
+    p25: number;
+    mean: number;
+    p75: number;
+  };
+};
 
-const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDataValues => {
-  const {
-    isLoading,
-    data: statistics
-  } = useQuery<Statistics | null, Error>(["statistics", selectedJobId], (): Promise<Statistics | null> => getStatistics(selectedJobId));
+const useSalariesData = ({
+  selectedJobId,
+}: UseSalariesDataArgs): UseSalariesDataValues => {
+  const { isLoading, data: statistics } = useQuery<Statistics | null, Error>(
+    ["statistics", selectedJobId],
+    (): Promise<Statistics | null> => getStatistics(selectedJobId)
+  );
 
   if (isLoading || !statistics) {
-    return ({
+    return {
       isLoading,
       ready: Boolean(statistics),
       step: 0,
@@ -36,18 +38,31 @@ const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDat
       percentiles: {
         p25: 0,
         mean: 0,
-        p75: 0
-      }
-    })
+        p75: 0,
+      },
+    };
   }
 
-  const order: number = Math.pow(10, Math.floor(Math.log(statistics.percentiles.mean) / Math.LN10 + 0.000000001));
-  const minSalaryDisplay: number = Math.max(Math.floor(statistics.percentiles.p25 / order) * order - order, 0);
-  const maxSalaryDisplay: number = Math.ceil(statistics.percentiles.p75 / order) * order + order;
+  const order: number = Math.pow(
+    10,
+    Math.floor(Math.log(statistics.percentiles.mean) / Math.LN10 + 0.000000001)
+  );
+  const minSalaryDisplay: number = Math.max(
+    Math.floor(statistics.percentiles.p25 / order) * order - order,
+    0
+  );
+  const maxSalaryDisplay: number =
+    Math.ceil(statistics.percentiles.p75 / order) * order + order;
   const step: number = Math.round((maxSalaryDisplay - minSalaryDisplay) / 10);
 
-  const startPercent: number = (statistics.percentiles.p25 - minSalaryDisplay) / (maxSalaryDisplay - minSalaryDisplay) * 100;
-  const endPercent: number = (statistics.percentiles.p75 - minSalaryDisplay) / (maxSalaryDisplay - minSalaryDisplay) * 100;
+  const startPercent: number =
+    ((statistics.percentiles.p25 - minSalaryDisplay) /
+      (maxSalaryDisplay - minSalaryDisplay)) *
+    100;
+  const endPercent: number =
+    ((statistics.percentiles.p75 - minSalaryDisplay) /
+      (maxSalaryDisplay - minSalaryDisplay)) *
+    100;
 
   return {
     isLoading,
@@ -56,8 +71,8 @@ const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDat
     startPercent,
     endPercent,
     maxSalaryDisplay,
-    percentiles: statistics.percentiles
-  }
+    percentiles: statistics.percentiles,
+  };
 };
 
 export default useSalariesData;

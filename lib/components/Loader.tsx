@@ -14,4 +14,4 @@ const Loader: React.FC = () => {
   return <div>Loading...</div>;
 };
 
-export default Loader
+export default Loader;
