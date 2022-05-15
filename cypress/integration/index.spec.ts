@@ -31,6 +31,14 @@ describe("api/jobs", () => {
     cy.contains('Test job').should('have.class', 'selected')
     cy.get('.salary-graph-item').should('exist')
   });
+
+  it('displays the p75, mean and p25 data on the graph', () => {
+    cy.visit('http://localhost:3001/')
+    cy.contains('Test job').click()
+    cy.get('[data-testid=p25-salary]').should('contain', '38,000€')
+    cy.get('[data-testid=mean-salary]').should('contain', '46,000€')
+    cy.get('[data-testid=p75-salary]').should('contain', '58,000€')
+  })
 });
 
 export {};

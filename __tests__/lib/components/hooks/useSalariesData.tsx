@@ -13,7 +13,7 @@ const wrapper = ({ children }) => (
 
 describe("JobsStatistics", () => {
   it("renders a heading", async () => {
-    const expectation = nock("http://localhost/")
+    nock("http://localhost/")
       .get("/api/statistics?jobId=2")
       .reply(200, {
         jobId: 2,
@@ -36,7 +36,12 @@ describe("JobsStatistics", () => {
       step: 6000,
       startPercent: 25,
       endPercent: 75,
-      maxSalaryDisplay: 80000
+      maxSalaryDisplay: 80000,
+      percentiles: {
+        p25: 35000,
+        mean: 45000,
+        p75: 65000
+      }
     })
   });
 });

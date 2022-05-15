@@ -11,7 +11,12 @@ type UseSalariesDataValues = {
   step: number,
   startPercent: number,
   endPercent: number,
-  maxSalaryDisplay: number
+  maxSalaryDisplay: number,
+  percentiles: {
+    p25: number,
+    mean: number,
+    p75: number
+  }
 }
 
 const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDataValues => {
@@ -27,7 +32,12 @@ const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDat
       step: 0,
       startPercent: 0,
       endPercent: 0,
-      maxSalaryDisplay: 0
+      maxSalaryDisplay: 0,
+      percentiles: {
+        p25: 0,
+        mean: 0,
+        p75: 0
+      }
     })
   }
 
@@ -45,7 +55,8 @@ const useSalariesData = ({ selectedJobId }: UseSalariesDataArgs): UseSalariesDat
     step,
     startPercent,
     endPercent,
-    maxSalaryDisplay
+    maxSalaryDisplay,
+    percentiles: statistics.percentiles
   }
 };
 
