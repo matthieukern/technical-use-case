@@ -27,6 +27,19 @@ npm run dev
 open http://localhost:3000
 ```
 
+# Testing
+
+```bash
+# setting up tests database
+npm run migrate:tests
+
+# unit tests
+npm run test
+
+# integration/e2e tests
+npm run cypress
+```
+
 # Instructions
 
 ## MVP
